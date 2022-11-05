@@ -4,4 +4,5 @@ import lombok.Setter;
 
 @Setter
 public class UserSignUpSubmitResponseDTO {
+    private int value;
 }

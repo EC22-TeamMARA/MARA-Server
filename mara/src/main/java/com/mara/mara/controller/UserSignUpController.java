@@ -1,5 +1,7 @@
 package com.mara.mara.controller;
 
+import com.mara.mara.data.SuccessCode;
+import com.mara.mara.dto.BaseResponse;
 import com.mara.mara.dto.req.UserSignUpSubmitRequestDTO;
 import com.mara.mara.service.UserSignUpService;
 import lombok.RequiredArgsConstructor;
@@ -16,10 +18,10 @@ public class UserSignUpController {
     @ResponseBody
     @PostMapping("/submit")
     public ResponseEntity SignUpSubmit(@RequestBody UserSignUpSubmitRequestDTO submitdto){
-
+        SuccessCode code = userSignUpService.signUp(submitdto);
         return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(userSignUpService.signUp(submitdto));
+                .status(code.getHttpStatus())
+                .body(new BaseResponse(code.getMsg()));
     }
 
 }
