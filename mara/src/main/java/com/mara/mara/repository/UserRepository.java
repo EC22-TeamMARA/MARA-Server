@@ -24,4 +24,20 @@ public class UserRepository {
                 }
                 ,userId).stream().findFirst();
     }
+
+    public boolean existsByIdentifyId(String identifyId){
+        return !jdbcTemplate.query("select identify_id from user where identify_id=?"
+                ,(rs,num)->{
+                    return rs.getString("identify_id");
+                }
+                ,identifyId).isEmpty();
+    }
+
+    public boolean existsByNickname(String nickname){
+        return !jdbcTemplate.query("select nickname from user where nickname=?"
+                ,(rs,num)->{
+                    return rs.getString("nickname");
+                }
+                ,nickname).isEmpty();
+    }
 }
