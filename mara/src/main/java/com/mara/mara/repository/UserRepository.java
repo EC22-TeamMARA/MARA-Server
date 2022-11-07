@@ -25,19 +25,19 @@ public class UserRepository {
                 ,userId).stream().findFirst();
     }
 
-    public boolean existsByIdentifyId(String identifyId){
-        return !jdbcTemplate.query("select identify_id from user where identify_id=?"
+    public String findByIdentifyId(String identifyId){
+        return jdbcTemplate.query("select identify_id from user where identify_id=?"
                 ,(rs,num)->{
                     return rs.getString("identify_id");
                 }
-                ,identifyId).isEmpty();
+                ,identifyId).stream().findFirst().orElse(null);
     }
 
-    public boolean existsByNickname(String nickname){
-        return !jdbcTemplate.query("select nickname from user where nickname=?"
+    public String findByNickname(String nickname){
+        return jdbcTemplate.query("select nickname from user where nickname=?"
                 ,(rs,num)->{
                     return rs.getString("nickname");
                 }
-                ,nickname).isEmpty();
+                ,nickname).stream().findFirst().orElse(null);
     }
 }

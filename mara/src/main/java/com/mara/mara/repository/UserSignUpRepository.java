@@ -18,7 +18,7 @@ public class UserSignUpRepository {
 
     public int saveJoin(UserSignUpSubmitRequestDTO submitDTO){
         return jdbcTemplate.update(
-                "insert into user(identiy_id, nickname, password) values(?,?,?)"
+                "insert into user(identify_id, nickname, pw) values(?,?,?)"
                 ,submitDTO.getIdentifyId(),submitDTO.getNickname(),submitDTO.getPassword()
         );
 
