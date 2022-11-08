@@ -1,5 +1,7 @@
 package com.mara.mara.repository;
 
+import com.mara.mara.data.ErrorCode;
+import com.mara.mara.exception.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -30,7 +32,7 @@ public class UserRepository {
                 ,(rs,num)->{
                     return rs.getString("identify_id");
                 }
-                ,identifyId).stream().findFirst().orElse(null);
+                ,identifyId).stream().findFirst().orElseThrow(()-> new CustomException(ErrorCode.JOIN_CONFLICT_ID));
     }
 
     public String findByNickname(String nickname){
@@ -38,6 +40,6 @@ public class UserRepository {
                 ,(rs,num)->{
                     return rs.getString("nickname");
                 }
-                ,nickname).stream().findFirst().orElse(null);
+                ,nickname).stream().findFirst().orElseThrow(()-> new CustomException(ErrorCode.JOIN_CONFLICT_NICKNAME));
     }
 }
