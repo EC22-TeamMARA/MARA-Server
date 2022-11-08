@@ -18,13 +18,13 @@ public class UserRepository {
         this.jdbcTemplate = new JdbcTemplate((dataSource));
     }
 
-    public Optional<Long> findById(Long userId){
+    public Long findById(Long userId){
         return jdbcTemplate.query(
                 "select id from user where id = ?"
                 ,(rs,num)->{
                     return rs.getLong("id");
                 }
-                ,userId).stream().findFirst();
+                ,userId).stream().findFirst().orElseThrow(()-> new CustomException(ErrorCode.NO_EXIST_USER));
     }
 
     public String findByIdentifyId(String identifyId){
@@ -32,7 +32,7 @@ public class UserRepository {
                 ,(rs,num)->{
                     return rs.getString("identify_id");
                 }
-                ,identifyId).stream().findFirst().orElseThrow(()-> new CustomException(ErrorCode.JOIN_CONFLICT_ID));
+                ,identifyId).stream().findFirst().orElseThrow(()-> new CustomException(ErrorCode.NO_EXIST_ID));
     }
 
     public String findByNickname(String nickname){
@@ -40,6 +40,6 @@ public class UserRepository {
                 ,(rs,num)->{
                     return rs.getString("nickname");
                 }
-                ,nickname).stream().findFirst().orElseThrow(()-> new CustomException(ErrorCode.JOIN_CONFLICT_NICKNAME));
+                ,nickname).stream().findFirst().orElseThrow(()-> new CustomException(ErrorCode.NO_EXIST_NICKNAME));
     }
 }
