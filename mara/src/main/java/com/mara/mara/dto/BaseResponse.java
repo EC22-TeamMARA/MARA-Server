@@ -1,6 +1,8 @@
 package com.mara.mara.dto;
 
+import com.mara.mara.data.ErrorCode;
 import lombok.Getter;
+import org.springframework.http.ResponseEntity;
 
 @Getter
 public class BaseResponse {
@@ -9,5 +11,10 @@ public class BaseResponse {
         this.msg = msg;
     }
 
+    public static ResponseEntity<BaseResponse> errorResponse(ErrorCode errorCode){
+        return ResponseEntity
+                .status(errorCode.getHttpStatus())
+                .body(new BaseResponse(errorCode.getMsg()));
+    }
 
 }
