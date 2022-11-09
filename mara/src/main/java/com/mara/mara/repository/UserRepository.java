@@ -1,13 +1,12 @@
 package com.mara.mara.repository;
 
-import com.mara.mara.data.ErrorCode;
+import com.mara.mara.constant.ErrorCode;
 import com.mara.mara.exception.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.util.Optional;
 
 @Repository
 public class UserRepository {

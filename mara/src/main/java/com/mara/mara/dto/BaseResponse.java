@@ -1,6 +1,6 @@
 package com.mara.mara.dto;
 
-import com.mara.mara.data.ErrorCode;
+import com.mara.mara.constant.ErrorCode;
 import lombok.Getter;
 import org.springframework.http.ResponseEntity;
 

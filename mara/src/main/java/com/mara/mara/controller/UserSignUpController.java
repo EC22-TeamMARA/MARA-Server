@@ -1,10 +1,13 @@
 package com.mara.mara.controller;
 
-import com.mara.mara.data.SuccessCode;
+import com.mara.mara.constant.SuccessCode;
+import com.mara.mara.data.CocktailData;
+import com.mara.mara.data.TagData;
 import com.mara.mara.dto.BaseResponse;
 import com.mara.mara.dto.req.UserIdentifyIdDTO;
 import com.mara.mara.dto.req.UserNicknameDTO;
 import com.mara.mara.dto.req.UserSignUpSubmitRequestDTO;
+import com.mara.mara.dto.res.UserSignUpDataResponse;
 import com.mara.mara.dto.res.UserSignUpDuplicateResponse;
 import com.mara.mara.service.UserSignUpService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,9 +16,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/user/signup")
@@ -44,7 +48,7 @@ public class UserSignUpController {
     })
     @ResponseBody
     @PostMapping("/check/id")
-    public ResponseEntity<UserSignUpDuplicateResponse> checkDuplicateIdentifyId(@RequestBody UserIdentifyIdDTO dto){
+    public ResponseEntity<UserSignUpDuplicateResponse> CheckDuplicateIdentifyId(@RequestBody UserIdentifyIdDTO dto){
         boolean idDuplicate = userSignUpService.checkIdentifyIdDuplication(dto);
 
         UserSignUpDuplicateResponse response = new UserSignUpDuplicateResponse("",!idDuplicate);
@@ -60,7 +64,7 @@ public class UserSignUpController {
     })
     @ResponseBody
     @PostMapping("/check/nickname")
-    public ResponseEntity<UserSignUpDuplicateResponse> checkDuplicateIdentifyId(@RequestBody UserNicknameDTO dto){
+    public ResponseEntity<UserSignUpDuplicateResponse> CheckDuplicateIdentifyId(@RequestBody UserNicknameDTO dto){
         boolean nicknameDuplicate = userSignUpService.checkNicknameDuplication(dto);
         UserSignUpDuplicateResponse response = new UserSignUpDuplicateResponse("",!nicknameDuplicate);
         return ResponseEntity
@@ -68,6 +72,38 @@ public class UserSignUpController {
                 .body(response);
     }
 
+    @Operation(summary = "닉네임 중복 확인")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "성공",
+                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseEntity.class))})
+    })
+    @ResponseBody
+    @GetMapping("/data/cocktails")
+    public ResponseEntity<UserSignUpDataResponse> GetCocktailsDataForSignUp(){
+        List<CocktailData> list = userSignUpService.getCocktailDataForSignUp();
 
+        SuccessCode code = SuccessCode.SUCCESS;
+        UserSignUpDataResponse<CocktailData> response = new UserSignUpDataResponse<>(code.getMsg(),list);
+        return ResponseEntity
+                .ok()
+                .body(response);
+    }
+
+    @Operation(summary = "닉네임 중복 확인")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "성공",
+                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseEntity.class))})
+    })
+    @ResponseBody
+    @GetMapping("/data/tags")
+    public ResponseEntity<UserSignUpDataResponse> GetTagsDataForSignUp(){
+        List<TagData> list = userSignUpService.getTagDataForSignUp();
+
+        SuccessCode code = SuccessCode.SUCCESS;
+        UserSignUpDataResponse<TagData> response = new UserSignUpDataResponse<>(code.getMsg(),list);
+        return ResponseEntity
+                .ok()
+                .body(response);
+    }
 
 }

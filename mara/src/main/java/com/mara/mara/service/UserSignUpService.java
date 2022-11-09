@@ -1,6 +1,8 @@
 package com.mara.mara.service;
 
-import com.mara.mara.data.SuccessCode;
+import com.mara.mara.constant.SuccessCode;
+import com.mara.mara.data.CocktailData;
+import com.mara.mara.data.TagData;
 import com.mara.mara.dto.req.UserIdentifyIdDTO;
 import com.mara.mara.dto.req.UserNicknameDTO;
 import com.mara.mara.dto.req.UserSignUpSubmitRequestDTO;
@@ -10,6 +12,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -36,6 +39,14 @@ public class UserSignUpService {
         return dup.isPresent();
     }
 
+    @Transactional
+    public List<CocktailData> getCocktailDataForSignUp(){
+        return userSignUpRepository.getCocktailDataForSignUp();
+    }
 
+    @Transactional
+    public List<TagData> getTagDataForSignUp(){
+        return userSignUpRepository.getTagDataForSignUp();
+    }
 
 }

@@ -1,6 +1,6 @@
 package com.mara.mara.exception;
 
-import com.mara.mara.data.ErrorCode;
+import com.mara.mara.constant.ErrorCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

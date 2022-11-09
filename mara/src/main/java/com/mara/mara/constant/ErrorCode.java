@@ -1,4 +1,4 @@
-package com.mara.mara.data;
+package com.mara.mara.constant;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
