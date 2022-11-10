@@ -29,7 +29,7 @@ public class UserSignUpService {
 
     @Transactional
     public boolean checkIdentifyIdDuplication(UserIdentifyIdDTO dto){
-        Optional<String> dup = userSignUpRepository.checkDuplicateIdentifyId(dto.getNickname());
+        Optional<String> dup = userSignUpRepository.checkDuplicateIdentifyId(dto.getIdentifyId());
         return dup.isPresent();
     }
 
