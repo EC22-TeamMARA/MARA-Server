@@ -1,6 +1,6 @@
 package com.mara.mara.service;
 
-import com.mara.mara.data.SuccessCode;
+import com.mara.mara.constant.SuccessCode;
 import com.mara.mara.dto.req.UserIdentifyIdDTO;
 import com.mara.mara.dto.req.UserNicknameDTO;
 import com.mara.mara.dto.req.UserSignUpSubmitRequestDTO;

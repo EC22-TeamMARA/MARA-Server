@@ -1,4 +1,4 @@
-package com.mara.mara.data;
+package com.mara.mara.constant;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,11 +8,13 @@ import static org.springframework.http.HttpStatus.*;
 
 @Getter
 @AllArgsConstructor
-public enum ErrorCode {
-
-    JOIN_CONFLICT_ID(CONFLICT,"중복된 아이디가 있습니다."),
-    JOIN_CONFLICT_NICKNAME(CONFLICT,"중복된 닉네임이 있습니다.");;
+public enum SuccessCode {
+    SUCCESS(OK,"성공"),
+    JOIN_SUCCESS(OK,"회원가입 성공");
 
     private final HttpStatus httpStatus;
     private final String msg;
+
+
+
 }
