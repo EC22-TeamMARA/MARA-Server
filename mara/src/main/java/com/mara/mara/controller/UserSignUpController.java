@@ -34,16 +34,16 @@ public class UserSignUpController {
     })
     @ResponseBody
     @PostMapping("/submit")
-    public ResponseEntity<BaseResponse> SignUpSubmit(@RequestBody UserSignUpSubmitRequestDTO submitdto){
-        SuccessCode code = userSignUpService.signUp(submitdto);
+    public ResponseEntity<BaseResponse> SignUpSubmit(@RequestBody UserSignUpSubmitRequestDTO submitDto){
+        SuccessCode code = userSignUpService.signUp(submitDto);
         return ResponseEntity
                 .status(code.getHttpStatus())
                 .body(new BaseResponse(code.getMsg()));
     }
 
-    @Operation(summary = "아이디 중복 확인")
+    @Operation(summary = "아이디 중복 확인 (완료)")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "True - 닉네임 사용가능, False - 이미 닉네임이 존재함",
+            @ApiResponse(responseCode = "200", description = "True - 아이디 사용가능, False - 이미 아이디가 존재함",
                     content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseEntity.class))})
     })
     @ResponseBody
@@ -51,13 +51,14 @@ public class UserSignUpController {
     public ResponseEntity<UserSignUpDuplicateResponse> CheckDuplicateIdentifyId(@RequestBody UserIdentifyIdDTO dto){
         boolean idDuplicate = userSignUpService.checkIdentifyIdDuplication(dto);
 
-        UserSignUpDuplicateResponse response = new UserSignUpDuplicateResponse("",!idDuplicate);
+        SuccessCode code = SuccessCode.SUCCESS;
+        UserSignUpDuplicateResponse response = new UserSignUpDuplicateResponse(code.getMsg(),!idDuplicate);
         return ResponseEntity
                 .ok()
                 .body(response);
     }
 
-    @Operation(summary = "닉네임 중복 확인")
+    @Operation(summary = "닉네임 중복 확인 (완료)")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "True - 닉네임 사용가능, False - 이미 닉네임이 존재함",
                     content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseEntity.class))})
@@ -66,13 +67,15 @@ public class UserSignUpController {
     @PostMapping("/check/nickname")
     public ResponseEntity<UserSignUpDuplicateResponse> CheckDuplicateIdentifyId(@RequestBody UserNicknameDTO dto){
         boolean nicknameDuplicate = userSignUpService.checkNicknameDuplication(dto);
-        UserSignUpDuplicateResponse response = new UserSignUpDuplicateResponse("",!nicknameDuplicate);
+
+        SuccessCode code = SuccessCode.SUCCESS;
+        UserSignUpDuplicateResponse response = new UserSignUpDuplicateResponse(code.getMsg(),!nicknameDuplicate);
         return ResponseEntity
                 .ok()
                 .body(response);
     }
 
-    @Operation(summary = "닉네임 중복 확인")
+    @Operation(summary = "칵테일 정보 가져오기")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "성공",
                     content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseEntity.class))})
@@ -89,7 +92,7 @@ public class UserSignUpController {
                 .body(response);
     }
 
-    @Operation(summary = "닉네임 중복 확인")
+    @Operation(summary = "태그 정보 가져오기")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "성공",
                     content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseEntity.class))})
