@@ -72,7 +72,7 @@ public class UserSignUpController {
                 .body(response);
     }
 
-    @Operation(summary = "닉네임 중복 확인")
+    @Operation(summary = "칵테일 데이터 가져오기(완료)")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "성공",
                     content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseEntity.class))})
@@ -89,7 +89,7 @@ public class UserSignUpController {
                 .body(response);
     }
 
-    @Operation(summary = "닉네임 중복 확인")
+    @Operation(summary = "태그 데이터 가져오기(완료)")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "성공",
                     content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseEntity.class))})

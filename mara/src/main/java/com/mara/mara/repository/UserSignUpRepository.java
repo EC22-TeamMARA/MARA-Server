@@ -44,7 +44,7 @@ public class UserSignUpRepository {
     }
 
     public List<CocktailData> getCocktailDataForSignUp(){
-        return jdbcTemplate.query("select cocktail_id, cocktail_name, cocktail_img_url from cocktail where init=1"
+        return jdbcTemplate.query("select cocktail_id, cocktail_name, cocktail_img_url from cocktails where init=1"
                 ,(rs,num)-> {
                     return new CocktailData(
                             rs.getLong("cocktail_id"),
@@ -55,7 +55,7 @@ public class UserSignUpRepository {
     }
 
     public List<TagData> getTagDataForSignUp(){
-        return jdbcTemplate.query("select tag_id, tag_content from tag "
+        return jdbcTemplate.query("select tag_id, tag_content from tags "
                 ,(rs,num)-> {
                     return new TagData(
                             rs.getLong("tag_id"),
