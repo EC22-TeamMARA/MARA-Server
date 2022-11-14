@@ -14,6 +14,7 @@ public enum ErrorCode {
     NO_EXIST_USER(BAD_REQUEST, "해당 유저가 존재하지 않습니다."),
     NO_EXIST_ID(BAD_REQUEST, "해당 아이디가 존재하지 않습니다."),
     NO_EXIST_NICKNAME(BAD_REQUEST, "해당 닉네임이 존재하지 않습니다."),
+    NO_MATCH_PASSWORD(BAD_REQUEST,"비밀번호가 일치하지 않습니다."),
 
     /*409 - 회원가입 시 중복 여부 확인*/
     JOIN_CONFLICT_ID(CONFLICT,"중복된 아이디가 있습니다."),
