@@ -4,6 +4,7 @@ import com.mara.mara.data.CocktailData;
 import com.mara.mara.data.TagData;
 import com.mara.mara.dto.req.UserSignUpSubmitRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +15,9 @@ import java.util.Optional;
 @Repository
 public class UserSignUpRepository {
     private final JdbcTemplate jdbcTemplate;
+
+    @Value("${img.path}")
+    private String IMG_PATH;
 
     @Autowired
     public UserSignUpRepository(DataSource dataSource){
@@ -49,7 +53,7 @@ public class UserSignUpRepository {
                     return new CocktailData(
                             rs.getLong("cocktail_id"),
                             rs.getString("cocktail_name"),
-                            rs.getString("cocktail_img_url")
+                            IMG_PATH+rs.getString("cocktail_img_url")
                     );
                 });
     }

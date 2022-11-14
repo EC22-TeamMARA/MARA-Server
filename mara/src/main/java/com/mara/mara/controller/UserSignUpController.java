@@ -30,7 +30,7 @@ public class UserSignUpController {
     @Operation(summary = "회원가입 제출")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "회원가입 성공",
-            content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseEntity.class))})
+            content = { @Content(mediaType = "application/json", schema = @Schema(implementation = BaseResponse.class))})
     })
     @ResponseBody
     @PostMapping("/submit")
@@ -44,7 +44,7 @@ public class UserSignUpController {
     @Operation(summary = "아이디 중복 확인 (완료)")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "True - 아이디 사용가능, False - 이미 아이디가 존재함",
-                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseEntity.class))})
+                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UserSignUpDuplicateResponse.class))})
     })
     @ResponseBody
     @PostMapping("/check/id")
@@ -61,7 +61,7 @@ public class UserSignUpController {
     @Operation(summary = "닉네임 중복 확인 (완료)")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "True - 닉네임 사용가능, False - 이미 닉네임이 존재함",
-                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseEntity.class))})
+                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UserSignUpDuplicateResponse.class))})
     })
     @ResponseBody
     @PostMapping("/check/nickname")
@@ -78,7 +78,7 @@ public class UserSignUpController {
     @Operation(summary = "칵테일 데이터 가져오기(완료)")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "성공",
-                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseEntity.class))})
+                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UserSignUpDataResponse.class))})
     })
     @ResponseBody
     @GetMapping("/data/cocktails")
@@ -95,7 +95,7 @@ public class UserSignUpController {
     @Operation(summary = "태그 데이터 가져오기(완료)")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "성공",
-                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseEntity.class))})
+                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UserSignUpDataResponse.class))})
     })
     @ResponseBody
     @GetMapping("/data/tags")
