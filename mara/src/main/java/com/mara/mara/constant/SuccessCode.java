@@ -10,7 +10,8 @@ import static org.springframework.http.HttpStatus.*;
 @AllArgsConstructor
 public enum SuccessCode {
     SUCCESS(OK,"성공"),
-    JOIN_SUCCESS(OK,"회원가입 성공");
+    JOIN_SUCCESS(OK,"회원가입 성공"),
+    LOGIN_SUCCESS(OK,"로그인 성공");
 
     private final HttpStatus httpStatus;
     private final String msg;

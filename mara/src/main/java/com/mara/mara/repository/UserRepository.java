@@ -1,6 +1,7 @@
 package com.mara.mara.repository;
 
 import com.mara.mara.constant.ErrorCode;
+import com.mara.mara.data.UserData;
 import com.mara.mara.exception.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -40,5 +41,19 @@ public class UserRepository {
                     return rs.getString("nickname");
                 }
                 ,nickname).stream().findFirst().orElseThrow(()-> new CustomException(ErrorCode.NO_EXIST_NICKNAME));
+    }
+
+    public UserData getUserDataByIdentifyId(String identifyId){
+        return jdbcTemplate.query(
+                "select * from user where identify_id=?"
+                ,(rs,num)->{
+                    return new UserData(
+                            rs.getLong("id"),
+                            rs.getString("identify_id"),
+                            rs.getString("nickname"),
+                            rs.getString("pw")
+                    );
+                }
+                ,identifyId).stream().findFirst().orElseThrow(()-> new CustomException(ErrorCode.NO_EXIST_USER));
     }
 }
