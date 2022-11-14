@@ -2,6 +2,7 @@ package com.mara.mara.controller;
 
 import com.mara.mara.constant.SuccessCode;
 import com.mara.mara.data.UserData;
+import com.mara.mara.dto.BaseResponse;
 import com.mara.mara.dto.req.UserLoginDTO;
 import com.mara.mara.dto.res.UserLoginResponse;
 import com.mara.mara.service.UserLoginService;
@@ -26,9 +27,9 @@ public class UserLoginController {
     @Operation(summary = "로그인 API")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "로그인 성공",
-                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseEntity.class))}),
+                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UserLoginResponse.class))}),
             @ApiResponse(responseCode = "400", description = "로그인 실패 : 이유는 response msg 참고",
-                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseEntity.class))})
+                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = BaseResponse.class))})
     })
     @PostMapping("")
     public ResponseEntity<UserLoginResponse> Login(@RequestBody UserLoginDTO loginDTO){
