@@ -1,11 +1,14 @@
 package com.mara.mara.service;
 
+import com.mara.mara.constant.ErrorCode;
 import com.mara.mara.constant.SuccessCode;
 import com.mara.mara.data.CocktailData;
 import com.mara.mara.data.TagData;
+import com.mara.mara.data.UserData;
 import com.mara.mara.dto.req.UserIdentifyIdDTO;
 import com.mara.mara.dto.req.UserNicknameDTO;
-import com.mara.mara.dto.req.UserSignUpSubmitRequestDTO;
+import com.mara.mara.dto.req.UserCreateAccountDTO;
+import com.mara.mara.exception.CustomException;
 import com.mara.mara.repository.UserRepository;
 import com.mara.mara.repository.UserSignUpRepository;
 import lombok.AllArgsConstructor;
@@ -22,9 +25,15 @@ public class UserSignUpService {
     private final UserSignUpRepository userSignUpRepository;
 
     @Transactional
-    public SuccessCode signUp(UserSignUpSubmitRequestDTO submitDTO){
-        userSignUpRepository.saveJoin(submitDTO);
-        return SuccessCode.JOIN_SUCCESS;
+    public UserData signUp(UserCreateAccountDTO submitDTO){
+        try{
+            userSignUpRepository.saveJoin(submitDTO);
+        }
+        catch (Exception e){
+            throw new CustomException(ErrorCode.JOIN_CONFLICT_USER);
+        }
+        UserData data = userRepository.getUserDataByIdentifyId(submitDTO.getIdentifyId());
+        return data;
     }
 
     @Transactional
