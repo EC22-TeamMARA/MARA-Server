@@ -1,8 +1,10 @@
 package com.mara.mara.repository;
 
+import com.mara.mara.constant.ErrorCode;
 import com.mara.mara.data.CocktailData;
 import com.mara.mara.data.TagData;
-import com.mara.mara.dto.req.UserSignUpSubmitRequestDTO;
+import com.mara.mara.dto.req.UserCreateAccountDTO;
+import com.mara.mara.exception.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -24,7 +26,7 @@ public class UserSignUpRepository {
         this.jdbcTemplate = new JdbcTemplate((dataSource));
     }
 
-    public int saveJoin(UserSignUpSubmitRequestDTO submitDTO){
+    public int saveJoin(UserCreateAccountDTO submitDTO) throws Exception {
         return jdbcTemplate.update(
                 "insert into user(identify_id, nickname, pw) values(?,?,?)"
                 ,submitDTO.getIdentifyId(),submitDTO.getNickname(),submitDTO.getPassword()

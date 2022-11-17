@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserSignUpSubmitRequestDTO {
+public class UserCreateAccountDTO {
     private String identifyId;
     private String nickname;
     private String password;
