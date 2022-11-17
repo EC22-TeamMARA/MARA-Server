@@ -25,7 +25,7 @@ public class RSController {
     private final RSService rsService;
     private final WebClientService webClientService;
 
-    @Operation(summary = "좋아하는 칵테일 저장 API")
+    @Operation(summary = "좋아하는 칵테일 저장 API (완료)")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "성공",
                     content = { @Content(mediaType = "application/json", schema = @Schema(implementation = BaseResponse.class))})
