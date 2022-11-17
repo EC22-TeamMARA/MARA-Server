@@ -18,11 +18,25 @@ public class RSrepository {
     }
 
     public int saveCocktailId(Long userId,Long cocktailId){
-        return jdbcTemplate.update("insert into user_like_cocktails(user_id,cocktail_id) values(?,?)",userId,cocktailId);
+        Integer n = jdbcTemplate.query("select count(*) as n from user_like_cocktails where user_id=? and cocktail_id=?"
+                ,(rs,num)->{
+                    return rs.getInt("n");
+                }
+                ,userId,cocktailId).stream().findFirst().get();
+        if(n==0)
+            return jdbcTemplate.update("insert into user_like_cocktails(user_id,cocktail_id) values(?,?)",userId,cocktailId);
+        return 0;
     }
 
     public int saveTagId(Long userId,Long tagId){
-        return jdbcTemplate.update("insert into user_prefer_tags(user_id,tag_id) values(?,?)",userId,tagId);
+        Integer n = jdbcTemplate.query("select count(*) as n from user_prefer_tags where user_id=?"
+                ,(rs,num)->{
+                    return rs.getInt("n");
+                }
+                ,userId).stream().findFirst().get();
+        if(n==0)
+            return jdbcTemplate.update("insert into user_prefer_tags(user_id,tag_id) values(?,?)",userId,tagId);
+        return 0;
     }
 
     public List<UserLikeTagData> getTop3TagByCocktail(Long cocktailId){
