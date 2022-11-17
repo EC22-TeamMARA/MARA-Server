@@ -1,6 +1,7 @@
 package com.mara.mara.service;
 
 import com.mara.mara.data.RSData;
+import com.mara.mara.data.UserLikeData;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
@@ -11,6 +12,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class RSService {
@@ -26,16 +28,18 @@ public class RSService {
     }
 
     private RSData verification(Long userId){
-        MultiValueMap<String,String> formData = new LinkedMultiValueMap<>();
-        //ArrayList<int> array = new ArrayList<int>();
-        //array.add(1); array.add(2); array.add(3);
-        //formData.add("testData",array);
-        //formData.add("test","test");
+        MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
+        UserLikeData data = new UserLikeData(userId,0,1);
+        formData.add("user_id",userId.toString());
+        formData.add("_1",Integer.toString(1));
+        formData.add("_2",Integer.toString(2));
 
-        return webClient.get()
-                .uri("/")
-                //.contentType(MediaType.APPLICATION_JSON)
-                //.body(BodyInserters.fromFormData(formData))
+
+
+        return webClient.post()
+                .uri("/test")
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(BodyInserters.fromFormData(formData))
                 .retrieve()
                 .bodyToMono(RSData.class)
                 .block();

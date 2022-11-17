@@ -5,12 +5,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 public class UserRSResponse extends BaseResponse {
     private RSResult data;
 
-    public UserRSResponse(String msg, ArrayList<int> data ){
+    public UserRSResponse(String msg, List<Integer> data ){
         super(msg);
         this.data = new RSResult(data);
     }
@@ -18,6 +19,6 @@ public class UserRSResponse extends BaseResponse {
     @Getter
     @AllArgsConstructor
     static class RSResult{
-        private ArrayList<int> recommendCocktails;
+        private List<Integer> recommendCocktails;
     }
 }
