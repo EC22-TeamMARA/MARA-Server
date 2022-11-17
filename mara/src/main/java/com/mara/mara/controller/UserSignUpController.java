@@ -3,10 +3,12 @@ package com.mara.mara.controller;
 import com.mara.mara.constant.SuccessCode;
 import com.mara.mara.data.CocktailData;
 import com.mara.mara.data.TagData;
+import com.mara.mara.data.UserData;
 import com.mara.mara.dto.BaseResponse;
 import com.mara.mara.dto.req.UserIdentifyIdDTO;
 import com.mara.mara.dto.req.UserNicknameDTO;
-import com.mara.mara.dto.req.UserSignUpSubmitRequestDTO;
+import com.mara.mara.dto.req.UserCreateAccountDTO;
+import com.mara.mara.dto.res.UserCreateAccountResponse;
 import com.mara.mara.dto.res.UserSignUpDataResponse;
 import com.mara.mara.dto.res.UserSignUpDuplicateResponse;
 import com.mara.mara.service.UserSignUpService;
@@ -27,18 +29,23 @@ import java.util.List;
 public class UserSignUpController {
     private final UserSignUpService userSignUpService;
 
-    @Operation(summary = "회원가입 제출")
+    @Operation(summary = "계정생성")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "회원가입 성공",
-            content = { @Content(mediaType = "application/json", schema = @Schema(implementation = BaseResponse.class))})
+            content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UserCreateAccountResponse.class))}),
+            @ApiResponse(responseCode = "409", description = "중복 계정 존재",
+                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = BaseResponse.class))})
     })
     @ResponseBody
     @PostMapping("/submit")
-    public ResponseEntity<BaseResponse> SignUpSubmit(@RequestBody UserSignUpSubmitRequestDTO submitDto){
-        SuccessCode code = userSignUpService.signUp(submitDto);
+    public ResponseEntity<UserCreateAccountResponse> CreateNewAccount(@RequestBody UserCreateAccountDTO accountDTO){
+        UserData data = userSignUpService.signUp(accountDTO);
+
+        SuccessCode code = SuccessCode.JOIN_SUCCESS;
+        UserCreateAccountResponse response = new UserCreateAccountResponse(code.getMsg(),data);
         return ResponseEntity
                 .status(code.getHttpStatus())
-                .body(new BaseResponse(code.getMsg()));
+                .body(response);
     }
 
     @Operation(summary = "아이디 중복 확인 (완료)")
@@ -54,7 +61,7 @@ public class UserSignUpController {
         SuccessCode code = SuccessCode.SUCCESS;
         UserSignUpDuplicateResponse response = new UserSignUpDuplicateResponse(code.getMsg(),!idDuplicate);
         return ResponseEntity
-                .ok()
+                .status(code.getHttpStatus())
                 .body(response);
     }
 
@@ -71,7 +78,7 @@ public class UserSignUpController {
         SuccessCode code = SuccessCode.SUCCESS;
         UserSignUpDuplicateResponse response = new UserSignUpDuplicateResponse(code.getMsg(),!nicknameDuplicate);
         return ResponseEntity
-                .ok()
+                .status(code.getHttpStatus())
                 .body(response);
     }
 
@@ -88,7 +95,7 @@ public class UserSignUpController {
         SuccessCode code = SuccessCode.SUCCESS;
         UserSignUpDataResponse<CocktailData> response = new UserSignUpDataResponse<>(code.getMsg(),list);
         return ResponseEntity
-                .ok()
+                .status(code.getHttpStatus())
                 .body(response);
     }
 
@@ -105,7 +112,7 @@ public class UserSignUpController {
         SuccessCode code = SuccessCode.SUCCESS;
         UserSignUpDataResponse<TagData> response = new UserSignUpDataResponse<>(code.getMsg(),list);
         return ResponseEntity
-                .ok()
+                .status(code.getHttpStatus())
                 .body(response);
     }
 

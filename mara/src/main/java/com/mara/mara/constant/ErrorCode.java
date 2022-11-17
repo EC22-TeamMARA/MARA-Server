@@ -17,6 +17,7 @@ public enum ErrorCode {
     NO_MATCH_PASSWORD(BAD_REQUEST,"비밀번호가 일치하지 않습니다."),
 
     /*409 - 회원가입 시 중복 여부 확인*/
+    JOIN_CONFLICT_USER(CONFLICT,"중복된 유저가 있습니다."),
     JOIN_CONFLICT_ID(CONFLICT,"중복된 아이디가 있습니다."),
     JOIN_CONFLICT_NICKNAME(CONFLICT,"중복된 닉네임이 있습니다.");;
 

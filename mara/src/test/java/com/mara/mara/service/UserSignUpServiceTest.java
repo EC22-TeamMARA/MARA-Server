@@ -3,7 +3,7 @@ package com.mara.mara.service;
 import com.mara.mara.constant.SuccessCode;
 import com.mara.mara.dto.req.UserIdentifyIdDTO;
 import com.mara.mara.dto.req.UserNicknameDTO;
-import com.mara.mara.dto.req.UserSignUpSubmitRequestDTO;
+import com.mara.mara.dto.req.UserCreateAccountDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,9 +15,9 @@ public class UserSignUpServiceTest {
 
     @Test
     public void 회원가입(){
-        UserSignUpSubmitRequestDTO dto = new UserSignUpSubmitRequestDTO("yooki","우갱","1111");
-        SuccessCode code = signUpService.signUp(dto);
-        System.out.println(code.getMsg());
+        UserCreateAccountDTO dto = new UserCreateAccountDTO("yooki","우갱","1111");
+        //SuccessCode code = signUpService.signUp(dto);
+        //System.out.println(code.getMsg());
     }
 
     @Test
