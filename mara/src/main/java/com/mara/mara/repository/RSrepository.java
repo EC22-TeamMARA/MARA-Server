@@ -39,6 +39,17 @@ public class RSrepository {
         return 0;
     }
 
+    public Boolean okForSaveTagId(Long userId){
+        Integer n = jdbcTemplate.query("select count(*) as n from user_prefer_tags where user_id=?"
+                ,(rs,num)->{
+                    return rs.getInt("n");
+                }
+                ,userId).stream().findFirst().get();
+        if(n==0)
+            return true;
+        return false;
+    }
+
     public List<UserLikeTagData> getTop3TagByCocktail(Long cocktailId){
         return jdbcTemplate.query(
                 "select * " +
@@ -59,6 +70,4 @@ public class RSrepository {
                 }
                 ,cocktailId);
     }
-
-
 }

@@ -21,8 +21,10 @@ public class RSService {
 
     @Transactional
     public void saveTagIdList(UserTagSelectedDTO selectedDTO){
-        for(Long i : selectedDTO.getTagIdSelectedList()){
-            rSrepository.saveTagId(selectedDTO.getId(),i);
+        if(rSrepository.okForSaveTagId(selectedDTO.getId())){
+            for(Long i : selectedDTO.getTagIdSelectedList()){
+                rSrepository.saveTagId(selectedDTO.getId(),i);
+            }
         }
     }
 
