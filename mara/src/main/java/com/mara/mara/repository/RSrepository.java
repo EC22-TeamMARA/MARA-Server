@@ -50,6 +50,19 @@ public class RSrepository {
         return false;
     }
 
+
+    public List<Integer> getLikeCocktailsAllByUserId(Long userId){
+        return jdbcTemplate.query(
+                "select cocktails.cocktail_id, if(user_id is null , 0 , 1) as u " +
+                        "from cocktails left join (select user_id,cocktail_id " +
+                        "from user_like_cocktails " +
+                        "where user_id=? ) as ut on cocktails.cocktail_id = ut.cocktail_id "
+                ,(rs,num)->{
+                    return rs.getInt("u");
+                }
+                ,userId);
+    }
+
     public List<UserLikeTagData> getTop3TagByCocktail(Long cocktailId){
         return jdbcTemplate.query(
                 "select * " +

@@ -1,13 +1,10 @@
 package com.mara.mara.controller;
 
 import com.mara.mara.constant.SuccessCode;
-import com.mara.mara.data.RSData;
 import com.mara.mara.dto.BaseResponse;
 import com.mara.mara.dto.req.UserCocktailSelectedDTO;
 import com.mara.mara.dto.req.UserTagSelectedDTO;
-import com.mara.mara.dto.res.UserLoginResponse;
-import com.mara.mara.dto.res.UserRSResponse;
-import com.mara.mara.service.RSService;
+import com.mara.mara.service.RSDataService;
 import com.mara.mara.service.WebClientService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -22,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user/rs")
 @RequiredArgsConstructor
 public class RSController {
-    private final RSService rsService;
+    private final RSDataService rsService;
     private final WebClientService webClientService;
 
     @Operation(summary = "좋아하는 칵테일 저장 API (완료)")

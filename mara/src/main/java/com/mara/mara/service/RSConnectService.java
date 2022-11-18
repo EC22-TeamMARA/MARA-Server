@@ -1,8 +1,9 @@
 package com.mara.mara.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mara.mara.dto.req.UserCocktailSelectedDTO;
-import com.mara.mara.dto.req.UserTagSelectedDTO;
+import com.mara.mara.constant.ErrorCode;
+import com.mara.mara.data.CFResultData;
+import com.mara.mara.exception.CustomException;
 import com.mara.mara.repository.RSrepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,39 +12,35 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
-public class RSService {
+public class RSConnectService {
     private final RSrepository rSrepository;
-
     @Value("${rs.url}")
     private String rsUrl;
 
+
     @Transactional
-    public void saveCocktailIdList(UserCocktailSelectedDTO selectedDTO){
-        for(Long i : selectedDTO.getCocktailIdSelectedList()){
-            rSrepository.saveCocktailId(selectedDTO.getId(),i);
+    public CFResultData executeCFSystem(Long userId){
+        List<Integer> dataList = rSrepository.getLikeCocktailsAllByUserId(userId);
+        dataList.add(0,userId.intValue());
+        try{
+            String result = restTemplateTest(dataList);
+            List<Integer> resultList = listMapper(result);
+            return new CFResultData(resultList);
+        }
+        catch (Exception e){
+            throw new CustomException(ErrorCode.ERROR);
         }
     }
 
-    @Transactional
-    public void saveTagIdList(UserTagSelectedDTO selectedDTO){
-        if(rSrepository.okForSaveTagId(selectedDTO.getId())){
-            for(Long i : selectedDTO.getTagIdSelectedList()){
-                rSrepository.saveTagId(selectedDTO.getId(),i);
-            }
-        }
-    }
-
 
     @Transactional
-    public void restTemplateTest() throws Exception {
+    public String restTemplateTest(List<Integer> dataList) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
@@ -60,6 +57,17 @@ public class RSService {
 
         System.out.println("status code : " + responseEntity.getStatusCode());
         System.out.println("body : " + responseEntity.getBody());
+        return responseEntity.getBody();
+    }
+
+    private List<Integer> listMapper(String data) { //objectMapper
+        List<Integer> list = new ArrayList<>();
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            list = objectMapper.readValue(data, List.class);
+        } catch (IOException e) {
+        }
+        return list;
     }
 
 }

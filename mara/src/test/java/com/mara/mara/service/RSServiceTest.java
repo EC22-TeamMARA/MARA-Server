@@ -6,12 +6,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 public class RSServiceTest {
-    @Autowired RSService rsService;
+    @Autowired RSConnectService rsService;
 
     @Test
     public void 파이썬통신(){
         try{
-            rsService.restTemplateTest();
+            //rsService.restTemplateTest();
         }
         catch(Exception e){
 
