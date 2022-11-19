@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserLoginController {
     private final UserLoginService loginService;
 
-    @Operation(summary = "로그인 API (완료)")
+    @Operation(summary = "로그인 API ")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "로그인 성공",
                     content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UserLoginResponse.class))}),

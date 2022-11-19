@@ -25,7 +25,7 @@ public class RSController {
     private final RSDataService rsService;
     private final RSConnectService rsConnectService;
 
-    @Operation(summary = "좋아하는 칵테일 저장 API (완료)")
+    @Operation(summary = "좋아하는 칵테일 저장 API ")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "성공",
                     content = { @Content(mediaType = "application/json", schema = @Schema(implementation = BaseResponse.class))})
@@ -41,7 +41,7 @@ public class RSController {
                 .body(response);
     }
 
-    @Operation(summary = "선호하는 키워드 저장 API")
+    @Operation(summary = "선호하는 키워드 저장 API ")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "성공",
                     content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UserRSResponse.class))}),

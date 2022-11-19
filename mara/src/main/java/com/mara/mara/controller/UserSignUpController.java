@@ -29,7 +29,7 @@ import java.util.List;
 public class UserSignUpController {
     private final UserSignUpService userSignUpService;
 
-    @Operation(summary = "계정생성 API (완료)")
+    @Operation(summary = "계정생성 API ")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "회원가입 성공",
             content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UserCreateAccountResponse.class))}),
@@ -48,7 +48,7 @@ public class UserSignUpController {
                 .body(response);
     }
 
-    @Operation(summary = "아이디 중복 확인 API (완료)")
+    @Operation(summary = "아이디 중복 확인 API ")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "True - 아이디 사용가능, False - 이미 아이디가 존재함",
                     content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UserSignUpDuplicateResponse.class))})
@@ -65,7 +65,7 @@ public class UserSignUpController {
                 .body(response);
     }
 
-    @Operation(summary = "닉네임 중복 확인 API (완료)")
+    @Operation(summary = "닉네임 중복 확인 API ")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "True - 닉네임 사용가능, False - 이미 닉네임이 존재함",
                     content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UserSignUpDuplicateResponse.class))})
@@ -82,7 +82,7 @@ public class UserSignUpController {
                 .body(response);
     }
 
-    @Operation(summary = "칵테일 데이터 가져오기 API (완료)")
+    @Operation(summary = "칵테일 데이터 가져오기 API ")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "성공",
                     content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UserSignUpDataResponse.class))})
@@ -99,7 +99,7 @@ public class UserSignUpController {
                 .body(response);
     }
 
-    @Operation(summary = "태그 데이터 가져오기 API (완료)")
+    @Operation(summary = "태그 데이터 가져오기 API ")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "성공",
                     content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UserSignUpDataResponse.class))})
