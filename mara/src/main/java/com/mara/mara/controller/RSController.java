@@ -9,7 +9,6 @@ import com.mara.mara.dto.req.UserTagSelectedDTO;
 import com.mara.mara.dto.res.UserRSResponse;
 import com.mara.mara.service.RSConnectService;
 import com.mara.mara.service.RSDataService;
-import com.mara.mara.service.WebClientService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -45,7 +44,9 @@ public class RSController {
     @Operation(summary = "선호하는 키워드 저장 API")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "성공",
-                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UserRSResponse.class))})
+                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UserRSResponse.class))}),
+            @ApiResponse(responseCode = "500", description = "오류",
+                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = BaseResponse.class))})
     })
     @PostMapping("/tags")
     public ResponseEntity<UserRSResponse> tagSys(@RequestBody UserTagSelectedDTO selectedDTO){

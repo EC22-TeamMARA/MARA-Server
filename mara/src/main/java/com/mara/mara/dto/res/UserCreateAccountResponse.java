@@ -4,7 +4,6 @@ import com.mara.mara.data.UserData;
 import com.mara.mara.dto.BaseResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 public class UserCreateAccountResponse extends BaseResponse {

@@ -35,14 +35,12 @@ public class RSConnectService {
         else{
             List<Integer> dataList = rSrepository.getLikeCocktailsAllByUserId(userId);
             dataList.add(0,userId.intValue());
-            System.out.println(dataList.toString());
             try{
                 String result = restTemplateTest(dataList);
                 resultList = listMapper(result);
             }
             catch (Exception e){
                 System.out.println(e.getMessage());
-                System.out.println(e.getCause());
                 throw new CustomException(ErrorCode.ERROR);
             }
         }
@@ -58,7 +56,6 @@ public class RSConnectService {
 
         Map<String, Object> map = new HashMap<>();
         List<Integer> cocktailList = dataList;
-        System.out.println(cocktailList.toString());
         map.put("userList", cocktailList);
         String param = mapper.writeValueAsString(map);
 
@@ -67,8 +64,6 @@ public class RSConnectService {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> responseEntity = restTemplate.exchange(rsUrl, HttpMethod.POST, entity, String.class);
 
-        System.out.println("status code : " + responseEntity.getStatusCode());
-        System.out.println("body : " + responseEntity.getBody());
         return responseEntity.getBody();
     }
 
