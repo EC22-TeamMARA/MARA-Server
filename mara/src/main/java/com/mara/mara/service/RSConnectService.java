@@ -28,12 +28,15 @@ public class RSConnectService {
     public CFResultData executeCFSystem(Long userId){
         List<Integer> dataList = rSrepository.getLikeCocktailsAllByUserId(userId);
         dataList.add(0,userId.intValue());
+        System.out.println(dataList.toString());
         try{
             String result = restTemplateTest(dataList);
             List<Integer> resultList = listMapper(result);
-            return new CFResultData(resultList);
+            return new CFResultData(userId,resultList);
         }
         catch (Exception e){
+            System.out.println(e.getMessage());
+            System.out.println(e.getCause());
             throw new CustomException(ErrorCode.ERROR);
         }
     }
@@ -46,7 +49,8 @@ public class RSConnectService {
         httpHeaders.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
 
         Map<String, Object> map = new HashMap<>();
-        List<Integer> cocktailList =  Arrays.asList(139,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,1,0,0,0,0,0,0,0,0,0);
+        List<Integer> cocktailList = dataList;
+        System.out.println(cocktailList.toString());
         map.put("userList", cocktailList);
         String param = mapper.writeValueAsString(map);
 

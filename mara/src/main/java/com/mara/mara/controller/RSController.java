@@ -1,9 +1,13 @@
 package com.mara.mara.controller;
 
 import com.mara.mara.constant.SuccessCode;
+import com.mara.mara.data.CFResultData;
+import com.mara.mara.data.CocktailData;
 import com.mara.mara.dto.BaseResponse;
 import com.mara.mara.dto.req.UserCocktailSelectedDTO;
 import com.mara.mara.dto.req.UserTagSelectedDTO;
+import com.mara.mara.dto.res.UserRSResponse;
+import com.mara.mara.service.RSConnectService;
 import com.mara.mara.service.RSDataService;
 import com.mara.mara.service.WebClientService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -20,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class RSController {
     private final RSDataService rsService;
-    private final WebClientService webClientService;
+    private final RSConnectService rsConnectService;
 
     @Operation(summary = "좋아하는 칵테일 저장 API (완료)")
     @ApiResponses(value = {
@@ -41,14 +45,17 @@ public class RSController {
     @Operation(summary = "선호하는 키워드 저장 API")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "성공",
-                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = BaseResponse.class))})
+                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = UserRSResponse.class))})
     })
     @PostMapping("/tags")
-    public ResponseEntity<BaseResponse> tagSys(@RequestBody UserTagSelectedDTO selectedDTO){
+    public ResponseEntity<UserRSResponse> tagSys(@RequestBody UserTagSelectedDTO selectedDTO){
         rsService.saveTagIdList(selectedDTO);
 
+        CFResultData resultData = rsConnectService.executeCFSystem(selectedDTO.getId());
+        CocktailData data = rsService.tagRSSystem(resultData);
+
         SuccessCode code = SuccessCode.SUCCESS;
-        BaseResponse response = new BaseResponse(code.getMsg());
+        UserRSResponse response = new UserRSResponse(code.getMsg(),data);
         return ResponseEntity
                 .ok()
                 .body(response);

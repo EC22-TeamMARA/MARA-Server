@@ -10,5 +10,6 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 public class CFResultData {
+    Long userId;
     List<Integer> resultList;
 }
