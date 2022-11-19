@@ -48,6 +48,14 @@ public class RSrepository {
         return false;
     }
 
+    public Integer getLikeCocktailNum(Long userId){
+        return jdbcTemplate.query(
+                "select count(*) as n from user_like_cocktails where user_id=?"
+                ,(rs,num)->{
+                    return rs.getInt("n");
+                }
+                ,userId).stream().findFirst().get();
+    }
 
     public List<Integer> getLikeCocktailsAllByUserId(Long userId){
         return jdbcTemplate.query(

@@ -20,25 +20,33 @@ import java.util.*;
 @RequiredArgsConstructor
 public class RSConnectService {
     private final RSrepository rSrepository;
+
     @Value("${rs.url}")
     private String rsUrl;
 
+    @Value("${rs.top.cocktail}")
+    private String top3ListString;
 
     @Transactional
     public CFResultData executeCFSystem(Long userId){
-        List<Integer> dataList = rSrepository.getLikeCocktailsAllByUserId(userId);
-        dataList.add(0,userId.intValue());
-        System.out.println(dataList.toString());
-        try{
-            String result = restTemplateTest(dataList);
-            List<Integer> resultList = listMapper(result);
-            return new CFResultData(userId,resultList);
+        List<Integer> resultList;
+        if(rSrepository.getLikeCocktailNum(userId)==0)
+            resultList = listMapper(top3ListString);
+        else{
+            List<Integer> dataList = rSrepository.getLikeCocktailsAllByUserId(userId);
+            dataList.add(0,userId.intValue());
+            System.out.println(dataList.toString());
+            try{
+                String result = restTemplateTest(dataList);
+                resultList = listMapper(result);
+            }
+            catch (Exception e){
+                System.out.println(e.getMessage());
+                System.out.println(e.getCause());
+                throw new CustomException(ErrorCode.ERROR);
+            }
         }
-        catch (Exception e){
-            System.out.println(e.getMessage());
-            System.out.println(e.getCause());
-            throw new CustomException(ErrorCode.ERROR);
-        }
+        return new CFResultData(userId,resultList);
     }
 
 
